@@ -20,7 +20,7 @@ function updateUI() {
 
     // Update collected treasures
     const nftList = document.getElementById("nft-list");
-    nftList.innerHTML = '';
+    nftList.innerHTML = '';  // Clear the current list
     collectedTreasures.forEach((treasure) => {
         const nftItem = document.createElement('div');
         nftItem.classList.add('nft-item');
@@ -33,7 +33,7 @@ function updateUI() {
 
     // Update shop items
     const shopItemsContainer = document.getElementById("shop-items");
-    shopItemsContainer.innerHTML = ''; // clear previous items
+    shopItemsContainer.innerHTML = '';  // Clear previous items
     itemsForSale.forEach(item => {
         const shopItemDiv = document.createElement('div');
         shopItemDiv.classList.add('shop-item');
@@ -56,8 +56,7 @@ function explore() {
     // Show animation and update UI
     showTreasureAnimation(randomTreasure);
     addTreasure(randomTreasure);
-    playSound();
-    localStorage.setItem("coinBalance", coinBalance);
+    localStorage.setItem("coinBalance", coinBalance);  // Save coins in local storage
     updateUI();
 }
 
@@ -77,4 +76,14 @@ function showTreasureAnimation(treasure) {
     }, 1000);
 }
 
-// Play sound when treasure
+// Open the shop
+document.getElementById("shop-btn").addEventListener("click", () => {
+    document.getElementById("shop").style.display = "block";
+});
+
+// Close the shop
+document.getElementById("close-shop-btn").addEventListener("click", () => {
+    document.getElementById("shop").style.display = "none";
+});
+
+// Buy
