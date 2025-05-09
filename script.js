@@ -1,3 +1,4 @@
+// Define available treasures and items for sale
 const treasures = [
     { name: "Gold Coin", image: "gold-coin.png", rarity: "common", value: 10 },
     { name: "Silver Sword", image: "silver-sword.png", rarity: "common", value: 20 },
@@ -14,13 +15,14 @@ const itemsForSale = [
 let collectedTreasures = JSON.parse(localStorage.getItem("collectedTreasures")) || [];
 let coinBalance = parseInt(localStorage.getItem("coinBalance")) || 0;
 
+// Function to update UI after changes
 function updateUI() {
     // Update coin balance
     document.getElementById("coin-balance").innerText = coinBalance;
 
     // Update collected treasures
     const nftList = document.getElementById("nft-list");
-    nftList.innerHTML = '';  // Clear the current list
+    nftList.innerHTML = '';  // Clear current list
     collectedTreasures.forEach((treasure) => {
         const nftItem = document.createElement('div');
         nftItem.classList.add('nft-item');
@@ -86,4 +88,21 @@ document.getElementById("close-shop-btn").addEventListener("click", () => {
     document.getElementById("shop").style.display = "none";
 });
 
-// Buy
+// Buy an item from the shop
+function selectItemToBuy(itemName) {
+    const selectedItem = itemsForSale.find(item => item.name === itemName);
+    if (coinBalance >= selectedItem.cost) {
+        coinBalance -= selectedItem.cost;
+        localStorage.setItem("coinBalance", coinBalance);
+        alert(`You bought a ${selectedItem.name}!`);
+        updateUI();
+    } else {
+        alert("You don't have enough coins!");
+    }
+}
+
+// Set up Explore button
+document.getElementById("explore-btn").addEventListener("click", explore);
+
+// Initialize UI when the page loads
+updateUI();
